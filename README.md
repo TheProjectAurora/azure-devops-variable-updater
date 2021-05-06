@@ -56,6 +56,25 @@ optional arguments:
                         Numbert id of the variable group.
 ```
 
+### Usage from Azure DevOps pipeline
+
+Currently to use from the Azure DevOps pipeline you need following snippet:
+
+```yaml
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x' 
+    addToPath: true
+- script: |    
+    pip3 install requests
+    curl -o update-variable.py https://raw.githubusercontent.com/TheProjectAurora/azure-devops-variable-updater/main/bin/update-variable.py
+    python3 update-variable.py -t $(System.AccessToken) \
+      -o <organiozation name> \
+      -r <project> \
+      -g  <group variable id>\
+      latest_test=$(Build.BuildNumber)
+```
+
 ## Installation
 
 At the moment pip-package is not generated.
